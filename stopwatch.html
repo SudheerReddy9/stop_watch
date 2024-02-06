@@ -28,34 +28,6 @@
             </div>
         </div>
         <ul class="laps">
-            <li class="lap-item">
-                <span class="number">#1</span>
-                <span class="time-stamp">01 : 04 : 97</span>
-            </li>
-            <li class="lap-item">
-                <span class="number">#1</span>
-                <span class="time-stamp">01 : 04 : 97</span>
-            </li>
-            <li class="lap-item">
-                <span class="number">#1</span>
-                <span class="time-stamp">01 : 04 : 97</span>
-            </li>
-            <li class="lap-item">
-                <span class="number">#1</span>
-                <span class="time-stamp">01 : 04 : 97</span>
-            </li>
-            <li class="lap-item">
-                <span class="number">#1</span>
-                <span class="time-stamp">01 : 04 : 97</span>
-            </li>
-            <li class="lap-item">
-                <span class="number">#1</span>
-                <span class="time-stamp">01 : 04 : 97</span>
-            </li>
-            <li class="lap-item">
-                <span class="number">#1</span>
-                <span class="time-stamp">01 : 04 : 97</span>
-            </li>
             <button class="lap-clear">Clear All</button>
         </ul>
 
@@ -65,9 +37,11 @@
         const playButton = document.getElementsByClassName("play")[0];
         const lapButton = document.getElementsByClassName("lap")[0];
         const resetButton = document.getElementsByClassName("reset")[0];
+        const clearButton = document.getElementsByClassName("lap-clear")[0];
         const second = document.getElementsByClassName("sec")[0];
         const centiSecond = document.getElementsByClassName("msec")[0];
-        const minute = document.getElementsByClassName("minute")[0]
+        const minute = document.getElementsByClassName("minute")[0];
+        const laps = document.getElementsByClassName("laps")[0];
 
         let isPlay = false;
         let isReset = false;
@@ -77,6 +51,7 @@
         let centiCounter = 0;
         let secCounter = 0;
         let minCounter = 0;
+        let lapitem = 0;
 
         const toggleButton = () => {
             lapButton.classList.remove("hidden")
@@ -118,12 +93,35 @@
             lapButton.classList.add("hidden");
             resetButton.classList.add("hidden");
             minute.innerHTML = '00: '
-            second.innerHTML = '00: '
-            centiSecond.innerHTML = '00'
+            second.innerHTML = '&nbsp00: '
+            centiSecond.innerHTML = '&nbsp00'
+        }
+        const lap = () => {
+            const li = document.createElement("li");
+            const number = document.createElement("span");
+            const timeStamp = document.createElement("span");
+            
+            li.setAttribute("class", "lap-item");
+            number.setAttribute("class", "number");
+            timeStamp.setAttribute("class","time-stamp");
 
+            number.innerText = `#${++lapitem}`;
+            timeStamp.innerHTML = `${minCounter} : ${secCounter} : ${centiCounter}`;
+
+
+            li.append(number, timeStamp);
+            laps.append(li);
+        }
+
+        const ClearAll = () => {
+            laps.innerHTML = '';
+            laps.append(clearButton);
+            clearButton.classList.remove("hidden")
         }
         playButton.addEventListener("click", play);
         resetButton.addEventListener("click", reset);
+        lapButton.addEventListener("click",lap);
+        clearButton.addEventListener("click", ClearAll)
 
     </script>
 
